@@ -1,0 +1,6 @@
+{
+  "name": "UYOL – Sərnişin və Bağlama Daşıma Platforması",
+  "description": "Sərnişin və bağlama daşımalarında sürücünüzü özünüz seçin, canlı izləyin və rahat çatdırılmadan zövq alın.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
