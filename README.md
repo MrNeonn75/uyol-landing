@@ -1,123 +1,101 @@
-# UYOL — Sərnişin və Bağlama Daşıma Platforması (Landing Page)
+# UYOL — Şəhərlərarası Sərnişin və Bağlama Daşıma Platforması Landing Page
 
-Bu layihə **UYOL** (sərnişin və standart bağlama daşıma mobil platforması) üçün hazırlanmış yüksək konversiyalı, müasir və Figma dizayn sisteminə tam uyğunlaşdırılmış rəsmi landing page-dir.
-
----
-
-## 1. Əsas Dizayn Qərarları və Prinsipləri
-
-1. **Bolt / Uber modelindən aydın fərqlənmə**:
-   - İstifadəçiyə heç vaxt təsadüfi sürücü təyin olunmur. İstifadəçi özü axtarır, avtomobilin modelinə, ilinə, baqaj tutumuna və reytinqinə baxaraq sürücünü sərbəst seçir.
-   - Sürücüyə avtomatik "sifariş təklifi" spamı getmir; sürücü öz "Gediş"ini yaradır və yalnız real yer/bağlama bron olunduqda bildiriş alır.
-2. **Qeydiyyatsız baxış azadlığı**:
-   - İstifadəçilər platformanı açan kimi qeydiyyat tələbi ilə qarşılaşmır. Bütün marşrutları, qiymətləri və sürücü profillərini maneəsiz araşdırır. Giriş yalnız bron zamanı tələb olunur.
-3. **E-ticarət tipli bağlama daşınması**:
-   - Yalnız standart şəxsi bağlamalar (iri mebel və ya ağır yük yoxdur).
-   - Həm göndərən, həm də qəbul edən şəxs canlı bildiriş və izləmə linki alır.
-   - Sürücü təhvili «Çatdırıldı» düyməsi ilə təsdiqləyir.
-   - Əgər sürücü gedişi ləğv edərsə, sistem bağlamanı avtomatik eyni marşrut üzrə növbəti sürücüyə yönləndirir.
-4. **Sürücü Həmrəyliyi və Sərnişin Ötürmə**:
-   - Texniki nasazlıq halında sərnişinlərin yolda qalmaması üçün tətbiqdaxili «Sərnişin Ötürmə» (Transfer) sistemi.
-5. **Dəqiq vaxt bildirişləri**:
-   - Sürücü əvvəlki ünvandan çıxanda, eləcə də 15 dəqiqə və 5 dəqiqə qalanda addım-addım bildirişlər.
-6. **Tezliklə: Kamera ilə bağlama həcmini ölçmə**:
-   - İstifadəçinin telefon kamerası ilə qutunun en, uzunluq və hündürlüyünü skan edərək avtomobil baqajına uyğunluğunu əvvəlcədən təyin etməsi.
-7. **Qadağalara 100% riayət**:
-   - Təsisçi, rəhbər, "Haqqımızda" hekayəsi və ya şəxsi əlaqə məlumatı daxil edilməmişdir.
-   - Saxta statistika ("100,000+ istifadəçi"), saxta rəylər və ya uydurma tərəfdaş loqoları qoyulmayıb.
+Bu layihə **UYOL** mobil tətbiqlərinin (User app və Driver app) dizayn sisteminə 1:1 uyğunlaşdırılmış, müasir və yüksək konversiyalı rəsmi veb landing səhifəsidir.
 
 ---
 
-## 2. Figma Design Tokenlərinin Dəyişdirilməsi Qaydası
+## 1. Dizayn Qərarları və Fəlsəfə
 
-Figma faylınızdakı rəngləri və şriftləri tətbiq etmək üçün iki əsas fayl mövcuddur:
+1. **Brend Kimliyi və Rəng Balansı (60-30-10):**
+   - **60% Neytral zəmin:** Səhifənin əsas zəmini açıq neytral `#F2F2F2` / `#FCFCFC`, mobil tətbiqin ritminə uyğun olaraq Hero, Sürücü və Final CTA bloklarında dərin qrafit `#1E1E1E` istifadə edilmişdir.
+   - **30% Struktur səthlər:** Kartlar üçün yumşaq kölgəli `#FCFCFC`, ayırıcı xətlər üçün `#E6E6E6` və `#F2F2F7`.
+   - **10% Brend Lime Vurğusu (`#DDF32C`):** Yalnız əsas CTA düymələri, loqodakı "U" hərfi və vacib təhvil statusları üçün nəzərdə tutulub. Ağ fonda mətn kimi istifadə edilməyərək WCAG AA kontrast qaydası qorunub.
 
-### A. CSS Dəyişənləri (`src/index.css`)
-```css
-:root {
-  --color-primary: #1E3A8A;        /* Figma Primary / Əsas göy ton */
-  --color-primary-hover: #172554;
-  --color-accent: #2563EB;         /* Figma Accent / Fəaliyyət göyü */
-  --color-accent-subtle: #EFF6FF;
-  --color-secondary: #0F172A;      /* Figma Secondary / Qara ton */
-  --color-surface: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-success: #10B981;        /* Çatdırıldı statusu */
-  --color-warning: #F59E0B;        /* 15 dəq qalıb statusu */
-  --color-error: #EF4444;          /* Ləğv statusu */
-}
-```
+2. **Dizayn Dili və Detallar:**
+   - **Əyri kəsimli Hero (`curved-bottom`):** Figma mobil header-in estetikasına uyğun zərif radiuslu kəsim.
+   - **Bilet Perforasiyası:** Həqiqi bilet hissi verən yan çentiklər (notches) və qırıq kəsim xətti ilə tərtib olunmuş rəqəmsal bilet.
+   - **Marşrut Zolağı:** `Bakı >>>>> Qəbələ` chevron ardıcıllığı və saat intervalı ilə dinamik vizual.
+   - **Cinsiyyət üzrə Oturacaq Bölgüsü:** Kişi və Qadın yerlərinin aydın differensiasiyası və interaktiv seçimi.
+   - **Sakit Sürücü Rejimi:** Sürücü üçün "sifariş" deyil, "gediş" fəlsəfəsi — yalnız yer və ya bağlama bron edildikdə bildiriş gəlməsi.
+   - **Avtomatik Yenidən Təyinat:** Sürücü ləğv edərsə bağlamanın avtomatik növbəti sürücüyə ötürülməsi zəmanəti.
 
-### B. JavaScript / TypeScript Tokenləri (`src/theme/tokens.ts`)
-Figma Inspect panelindən kopyaladığınız HEX dəyərlərini `src/theme/tokens.ts` faylındakı `designTokens` obyektinə yapışdırmağınız kifayətdir.
+3. **Tipoqrafiya:**
+   - Əsas şrift: **Poppins** (400 Regular, 500 Medium, 600 SemiBold, 700 Bold, 800 ExtraBold).
 
 ---
 
-## 3. Figma Ekranlarının Əvəzlənməsi (Screenshots Replacement)
-
-Tətbiq ekranları üçün həm Hero hissəsində, həm də `AppScreensCarousel.tsx` komponentində xüsusi yerlər təyin edilmişdir:
-
-1. **User App Ekranları**:
-   - `User_Trip_List.png` (Marşrut axtarışı və sürücü siyahısı)
-   - `User_Driver_Profile.png` (Sürücü profili, reytinq və avtomobil parametrləri)
-   - `User_Parcel_Tracking.png` (Bağlamanın canlı xəritəsi və status qrafiki)
-2. **Driver App Ekranları**:
-   - `Driver_Create_Trip.png` (Yeni Gediş yaratma və boş yer təyini)
-   - `Driver_Bookings_List.png` (Yalnız təsdiqlənmiş bron bildirişləri)
-   - `Driver_Passenger_Transfer.png` (Sərnişin ötürmə interfeysi)
-
-Bu ekranları Figma-dan PNG olaraq eksport edib `/public/screens/` qovluğuna yerləşdirə və `src/components/AppScreensCarousel.tsx` daxilindəki `imageSrc` sahəsinə yaza bilərsiniz. Hətta şəkillər hələ qoyulmadıqda belə, sistem həmin ekranları tam interaktiv kodlaşdırılmış SVG/HTML formatında yüksək dəqiqliklə nümayiş etdirir.
-
----
-
-## 4. Layihə Strukturu
+## 2. Layihə Strukturu
 
 ```
-/
-├── index.html                   # SEO, meta-teqlər, OpenGraph, Twitter Card, Schema.org JSON-LD
-├── metadata.json                # AI Studio layihə adı və təsviri
-├── package.json                 # Asılılıqlar (React 19, Tailwind v4, Lucide, Motion)
-├── src/
-│   ├── main.tsx                 # Əsas giriş nöqtəsi
-│   ├── App.tsx                  # 12 bölmədən ibarət əsas səhifə və modal idarəedicisi
-│   ├── index.css                # Tailwind v4, fontlar və CSS tokenləri
-│   ├── types/
-│   │   └── index.ts             # TypeScript tipləri (Language, Step, Screen, Faq)
-│   ├── theme/
-│   │   └── tokens.ts            # Figma token xəritəsi (rənglər, radius, kölgələr)
-│   ├── config/
-│   │   └── site.ts              # Mağaza linkləri, Figma slotları, analitika hook-u
-│   ├── i18n/
-│   │   └── translations.ts      # AZ (əsas), EN, RU dillərində tam mətn lüğəti
-│   └── components/
-│       ├── Header.tsx           # 3 zonalı yapışqan naviqasiya və dil seçimi
-│       ├── Hero.tsx             # Başlıq, App Store / Play Store və telefon mockup-ı
-│       ├── TrustBar.tsx         # 4 dürüst fakt (rəqəmsiz və saxta statistikasız)
-│       ├── HowItWorks.tsx       # Sərnişin və Bağlama üçün 4 addımlı proses
-│       ├── PassengerSection.tsx # Sürücü seçimi, qeydiyyatsız baxış və 15/5 dəq bildirişləri
-│       ├── ParcelSection.tsx    # E-ticarət tipli bağlama izləməsi və avto-əvəzləmə
-│       ├── DriverSection.tsx    # "Gediş" yaratma, sıfır sifariş spamı və sərnişin ötürmə
-│       ├── AppScreensCarousel.tsx # Figma ekranları karuseli (User və Driver ayrılıqda)
-│       ├── VolumeArDemo.tsx     # "Tezliklə": Kamera ilə bağlama həcmini təyin etmə
-│       ├── FaqSection.tsx       # 7 ədəd platformaya xas sual-cavab akordeonu
-│       ├── DownloadCta.tsx      # QR kodlu final yükləmə bloku
-│       ├── Footer.tsx           # Hüquqi və sakit altlıq (şəxsi/şirkət məlumatı yoxdur)
-│       ├── DownloadModal.tsx    # Yükləmə və QR modalı
-│       ├── LegalModal.tsx       # Məxfilik siyasəti və İstifadə şərtləri modalı
-│       └── CookieBanner.tsx     # Zəruri kuki bildirişi
+├── /index.html                 # SEO meta teqləri, Poppins şrifti, JSON-LD struktur məlumatı
+├── /metadata.json              # Applet metadatası
+├── /src
+│   ├── /assets/images          # 3D Sürücü mascotu və lime mikroavtobus vizualları
+│   ├── /components
+│   │   ├── UyolLogo.tsx        # UYOL horizontal və şaquli splash loqo komponenti
+│   │   ├── Header.tsx          # Top bar sticky naviqasiya və dil seçimi
+│   │   ├── Hero.tsx            # Əyri kəsimli Hero, iki telefon maketi ilə
+│   │   ├── ValueStrip.tsx      # Rəqəmsiz təmiz üstünlüklər zolağı
+│   │   ├── HowItWorks.tsx      # Sərnişin / Bağlama interaktiv addımları
+│   │   ├── PassengerSection.tsx# Gedişlər axtarışı və salon oturacaq seçimi
+│   │   ├── ParcelSection.tsx   # Canlı bağlama izləməsi və vaxtında bildirişlər
+│   │   ├── DriverSection.tsx   # UYOL Driver tətbiqi, mascot və mikroavtobus
+│   │   ├── AppScreensGallery.tsx# Telefon çərçivəsində tətbiq ekranları (User/Driver tabs)
+│   │   ├── ArMeasureTeaser.tsx # 'Tezliklə' Kamera ilə bağlama ölçmə simulyasiyası
+│   │   ├── FaqSection.tsx      # 7 əsas sual-cavab akordeonu
+│   │   ├── FinalCta.tsx        # Şaquli loqo, QR kod və SMS ilə yükləmə
+│   │   ├── Footer.tsx          # Təmiz hüquqi linklər və müəllif hüququ
+│   │   ├── DownloadModal.tsx   # App Store / Google Play / QR yükləmə pəncərəsi
+│   │   ├── TicketModal.tsx     # Zoom olunmuş perforasiyalı bilet pəncərəsi
+│   │   ├── ParcelTrackingModal.tsx # Canlı bağlama yoxlama pəncərəsi
+│   │   ├── LegalModal.tsx      # Məxfilik siyasəti və İstifadə şərtləri
+│   │   └── CookieBanner.tsx    # Kuki xəbərdarlıq bildirişi
+│   ├── /data/uyolData.ts       # Reallığa uyğun nümunə reyslər, suallar və statuslar
+│   ├── /types/index.ts         # TypeScript interfeysləri
+│   ├── App.tsx                 # Əsas app strukturu
+│   ├── index.css               # Tailwind v4 və xüsusi dizayn tokenləri
+│   └── main.tsx                # React kökü
+└── package.json
 ```
 
 ---
 
-## 5. İşə Salma
+## 3. Figma-dan Əl ilə Export Edilməli Asset Siyahısı
 
+Əgər Figma faylından (`ssGiFe1lbc3euHLEEylGuo`) birbaşa SVG və PNG formatında rəsmi vektorları əlavə etmək istəsəniz, aşağıdakı elementləri export edə bilərsiniz:
+
+1. **Loqo Wordmark (SVG):**
+   - Node: `Splash Screen / Logo` (və ya Header loqosu).
+   - Variantlar:
+     - Üfüqi: "U" (Lime `#DDF32C`) + "YOL" (Ağ `#FFFFFF` və ya Qara `#1E1E1E`).
+     - Şaquli (Splash 90° variantı): aşağıdan yuxarı oxunan "U-YOL" wordmark.
+2. **Sürücü Mascotu (3D Render / PNG):**
+   - Node: `Driver / Log in / Choises` ekranından 3D lime formalı və "U" kepkalı sürücü personajı.
+3. **Lime Mikroavtobus (PNG):**
+   - Node: `Driver / Log in / Choises` ekranındakı lime detallı mikroavtobus / Sprinter / Vito modeli.
+4. **Tətbiq Ekranları (Mockup PNG-ləri):**
+   - User App: `User / Search Trips`, `User / Seat Selection (Gender)`, `User / My Tickets (Perforated)`, `User / Parcel Tracking`.
+   - Driver App: `Driver / Post Trip`, `Driver / Booking Notifications`, `Driver / Passenger Transfer`.
+
+---
+
+## 4. İşə Salma və Tokenlərin Dəyişdirilməsi
+
+### Layihəni işə salmaq:
 ```bash
-# Asılılıqları quraşdırın
 npm install
-
-# İnkişaf serverini işə salın (Port 3000)
 npm run dev
-
-# Layihəni yoxlayın və build edin
-npm run build
 ```
+
+### Dizayn Tokenlərinin Dəyişdirilməsi:
+Bütün əsas rəng və tipoqrafiya tokenləri `/src/index.css` faylında `:root` daxilində və müvafiq Tailwind CSS siniflərində mərkəzləşdirilib:
+- `--accent-lime`: `#DDF32C`
+- `--neutral-800`: `#333333`
+- `--dark-graphite`: `#1E1E1E`
+- `--neutral-50`: `#F2F2F2`
+- `--bg-primary`: `#F2F2F7`
+- `--card-bg`: `#FCFCFC`
+- `--route-green`: `#3DB52F`
+- `--urgent-pink`: `#FEE2E2`
+- `--urgent-red`: `#DC2626`
+- `--price-lime-bg`: `#F4FBD0`

@@ -1,6 +1,6 @@
 {
-  "name": "UYOL – Sərnişin və Bağlama Daşıma Platforması",
-  "description": "Sərnişin və bağlama daşımalarında sürücünüzü özünüz seçin, canlı izləyin və rahat çatdırılmadan zövq alın.",
+  "name": "UYOL – Şəhərlərarası Sərnişin və Bağlama Daşıma",
+  "description": "UYOL mobil tətbiqi ilə şəhərlərarası gedişləri və sürücünü özün seç, biletini bron et, bağlamalarını qapıdan-qapıya canlı izləmə ilə etibarlı göndər.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

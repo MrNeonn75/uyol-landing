@@ -1,105 +1,89 @@
 import React from 'react';
-import { X, ShieldCheck, FileText } from 'lucide-react';
-import { Language } from '../types';
-import { translations } from '../i18n/translations';
+import { X, ShieldCheck } from 'lucide-react';
+import { UyolLogo } from './UyolLogo';
 
 interface LegalModalProps {
+  isOpen: boolean;
   type: 'privacy' | 'terms' | null;
   onClose: () => void;
-  currentLang: Language;
 }
 
-export const LegalModal: React.FC<LegalModalProps> = ({
-  type,
-  onClose,
-  currentLang,
-}) => {
-  if (!type) return null;
+export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, type, onClose }) => {
+  if (!isOpen || !type) return null;
 
-  const t = translations[currentLang];
   const isPrivacy = type === 'privacy';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
       <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div className="relative bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl z-10 max-h-[85vh] flex flex-col border border-neutral-200 text-left">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-neutral-200">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
-              {isPrivacy ? <ShieldCheck className="w-5 h-5" /> : <FileText className="w-5 h-5" />}
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-neutral-950">
-                {isPrivacy ? t.legalModal.privacyTitle : t.legalModal.termsTitle}
-              </h3>
-              <span className="text-xs text-neutral-400">UYOL Platforması</span>
-            </div>
-          </div>
+        className="relative w-full max-w-xl bg-[#FCFCFC] text-[#333333] rounded-3xl p-6 md:p-8 shadow-2xl border border-neutral-200 max-h-[85vh] overflow-y-auto"
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 p-2 rounded-full bg-neutral-100 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200 transition-colors"
+          aria-label="Bağla"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-2 text-neutral-400 hover:text-neutral-900 rounded-full hover:bg-neutral-100 transition-colors"
-            aria-label="Bağla"
-          >
-            <X className="w-5 h-5" />
-          </button>
+        <div className="flex items-center gap-3 mb-4">
+          <UyolLogo size="sm" theme="light" />
+          <span className="text-xs font-semibold px-2.5 py-0.5 bg-neutral-100 rounded-full text-neutral-600">
+            Hüquqi Məlumat
+          </span>
         </div>
 
-        {/* Content Body */}
-        <div className="flex-1 overflow-y-auto py-4 space-y-4 text-xs sm:text-sm text-neutral-600 leading-relaxed">
+        <h3 className="text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
+          <ShieldCheck className="w-5 h-5 text-[#3DB52F]" />
+          {isPrivacy ? 'Məxfilik Siyasəti' : 'İstifadə Şərtləri və Qaydalar'}
+        </h3>
+
+        <div className="space-y-4 text-xs text-neutral-600 leading-relaxed">
           {isPrivacy ? (
             <>
               <p>
-                Bu Məxfilik Siyasəti UYOL mobil tətbiqi (User App və Driver App) istifadəçilərinin şəxsi məlumatlarının toplanması, emalı və qorunması prinsiplərini müəyyən edir.
+                <strong>1. Toplanan Məlumatlar:</strong> UYOL tətbiqindən istifadə zamanı yalnız gedişlərin təşkili, OTP ilə giriş və bağlamaların çatdırılması üçün zəruri olan məlumatlar (telefon nömrəsi, ad və marşrut məlumatları) toplanır.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">1. Məlumatların toplanması və məqsədi</h4>
               <p>
-                Platformamız qeydiyyatsız baxış rejimini dəstəkləyir. Əlaqə məlumatları (telefon nömrəsi) yalnız konkret sərnişin yeri və ya bağlama bron edildikdə tələb olunur.
+                <strong>2. Məlumatların Qorunması:</strong> İstifadəçi məlumatları müasir şifrələmə protokolları ilə mühafizə olunur və heç bir halda üçüncü şəxslərə kommersiya və ya reklam məqsədilə ötürülmür.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">2. Geolokasiya və izləmə</h4>
               <p>
-                Sürücünün geolokasiyası yalnız aktiv gediş zamanı sərnişinlərə və bağlama göndərən/qəbul edən şəxslərə dəqiq çatdırılma vaxtı bildirişləri vermək üçün emal olunur.
+                <strong>3. Geolokasiya və Canlı İzləmə:</strong> Tətbiqdə geolokasiya yalnız aktiv gediş və ya bağlama daşınması zamanı dəqiq çatdırılma və təhlükəsizlik bildirişləri üçün istifadə edilir.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">3. Məlumat təhlükəsizliyi</h4>
               <p>
-                Toplanan bütün məlumatlar beynəlxalq şifrələmə protokolları ilə qorunur və üçüncü şəxslərə kommersiya məqsədilə ötürülmür.
+                <strong>4. Ödəniş Təhlükəsizliyi:</strong> Kart məlumatları tətbiqin serverlərində saxlanılmır; ödənişlər lisenziyalı bank emal mərkəzləri vasitəsilə 3D Secure təhlükəsizlik səviyyəsində həyata keçirilir.
               </p>
             </>
           ) : (
             <>
               <p>
-                UYOL platformasından istifadə etməklə aşağıdakı ümumi şərtlərlə razılaşmış olursunuz.
+                <strong>1. Ümumi Müddəalar:</strong> UYOL şəhərlərarası sərnişin və bağlama daşınması üçün sərnişinləri və sürücüləri birbaşa əlaqələndirən rəqəmsal platformadır.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">1. Platformanın xarakteri</h4>
               <p>
-                UYOL sərnişinlər və bağlama göndərənlərlə müstəqil sürücülər arasında birbaşa seçim və bron imkanı yaradan vasitəçi platformadır. Sürücülər sifarişləri avtomatik qəbul etmir; istifadəçilər özləri seçim edir.
+                <strong>2. Bilet Bronu və Ləğvetmə:</strong> Sərnişin istədiyi gedişi, avtomobili və oturacağı seçərək bilet əldə edir. Bron zamanı təsdiq olunmuş qaydalara uyğun olaraq gediş saatından əvvəl ləğvetmə şərtləri tətbiq olunur.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">2. Bağlama qaydaları</h4>
               <p>
-                Platformada yalnız standart şəxsi bağlamalar (sənədlər, geyim, qutular) daşına bilər. Qanunvericiliklə qadağan olunmuş maddələr və iri qabaritli yüklər qəbul edilmir.
+                <strong>3. Bağlamaların Daşınması:</strong> "Yük" anlayışı yalnız şəxsi bağlama, sənəd və qutulara aiddir. Qanunvericiliklə qadağan olunmuş maddələrin və tez xarab olan qidaların daşınması qadağandır.
               </p>
-              <h4 className="font-bold text-neutral-900 text-sm">3. Ləğv və dəyişdirmə</h4>
               <p>
-                Sürücü fors-major halında gedişi ləğv etdikdə sistem bağlama üçün avtomatik yeni sürücü axtarışını həyata keçirir.
+                <strong>4. Sürücü Zəmanəti və Yenidən Təyinat:</strong> Sürücü tərəfindən gediş ləğv edildikdə, bağlamalar avtomatik olaraq alternativ təsdiqlənmiş UYOL sürücüsünə yönləndirilir.
+              </p>
+              <p>
+                <strong>5. Sərnişin Ötürmə Qaydası:</strong> Texniki səbəblərdən gediş dayandıqda, sürücü sərnişini eyni marşrut üzrə hərəkət edən digər UYOL avtomobilinə rəsmi sistemlə transfer etmək hüququna malikdir.
               </p>
             </>
           )}
         </div>
 
-        {/* Footer */}
-        <div className="pt-4 border-t border-neutral-100 flex justify-end">
+        <div className="mt-6 pt-4 border-t border-neutral-200 flex justify-end">
           <button
-            type="button"
             onClick={onClose}
-            className="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl text-xs font-semibold transition-colors"
+            className="px-5 py-2 bg-[#1E1E1E] text-white rounded-xl text-xs font-medium hover:bg-black transition-colors"
           >
-            {t.legalModal.closeBtn}
+            Bağla
           </button>
         </div>
       </div>

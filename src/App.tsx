@@ -1,92 +1,108 @@
 import React, { useState } from 'react';
-import { Language } from './types';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { TrustBar } from './components/TrustBar';
+import { ValueStrip } from './components/ValueStrip';
 import { HowItWorks } from './components/HowItWorks';
 import { PassengerSection } from './components/PassengerSection';
 import { ParcelSection } from './components/ParcelSection';
 import { DriverSection } from './components/DriverSection';
-import { AppScreensCarousel } from './components/AppScreensCarousel';
-import { VolumeArDemo } from './components/VolumeArDemo';
+import { AppScreensGallery } from './components/AppScreensGallery';
+import { ArMeasureTeaser } from './components/ArMeasureTeaser';
 import { FaqSection } from './components/FaqSection';
-import { DownloadCta } from './components/DownloadCta';
+import { FinalCta } from './components/FinalCta';
 import { Footer } from './components/Footer';
 import { DownloadModal } from './components/DownloadModal';
+import { TicketModal } from './components/TicketModal';
+import { ParcelTrackingModal } from './components/ParcelTrackingModal';
 import { LegalModal } from './components/LegalModal';
 import { CookieBanner } from './components/CookieBanner';
 
 export default function App() {
-  const [currentLang, setCurrentLang] = useState<Language>('az');
-  const [downloadModalOpen, setDownloadModalOpen] = useState<boolean>(false);
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+  const [isTicketOpen, setIsTicketOpen] = useState(false);
+  const [isTrackingOpen, setIsTrackingOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | null>(null);
 
-  const handleOpenDownload = () => setDownloadModalOpen(true);
-  const handleCloseDownload = () => setDownloadModalOpen(false);
-
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 flex flex-col font-sans selection:bg-blue-600 selection:text-white">
-      {/* 1. Sticky Header with 3-Zone contract */}
-      <Header
-        currentLang={currentLang}
-        onLanguageChange={setCurrentLang}
-        onOpenDownload={handleOpenDownload}
-      />
+    <div className="min-h-screen bg-[#F2F2F2] flex flex-col font-sans">
+      {/* 1. Sticky Header */}
+      <Header onOpenDownload={() => setIsDownloadOpen(true)} />
 
-      {/* Main Page Landmark */}
       <main className="flex-1">
-        {/* 2. Hero with Value Prop & Device Mockup */}
-        <Hero currentLang={currentLang} onOpenDownload={handleOpenDownload} />
+        {/* 2. Hero Section */}
+        <Hero
+          onOpenDownload={() => setIsDownloadOpen(true)}
+          onOpenTicket={() => setIsTicketOpen(true)}
+        />
 
-        {/* 3. Honest Trust Bar (No fake stats) */}
-        <TrustBar currentLang={currentLang} />
+        {/* 3. Value Proposition Strip (No fake numbers) */}
+        <ValueStrip />
 
-        {/* 4. How It Works (Passenger vs Parcel Tab) */}
-        <HowItWorks currentLang={currentLang} />
+        {/* 4. How It Works (Sərnişin / Bağlama Toggle) */}
+        <HowItWorks
+          onOpenDownload={() => setIsDownloadOpen(true)}
+          onOpenTracking={() => setIsTrackingOpen(true)}
+        />
 
-        {/* 5. For Passengers (Driver choice, unreg browse, 15m/5m alerts) */}
-        <PassengerSection currentLang={currentLang} />
+        {/* 5. For Passengers (Sərnişinlər üçün) */}
+        <PassengerSection
+          onOpenTicket={() => setIsTicketOpen(true)}
+          onOpenDownload={() => setIsDownloadOpen(true)}
+        />
 
-        {/* 6. For Parcels (Tracking, dual notifications, auto-reassignment) */}
-        <ParcelSection currentLang={currentLang} />
+        {/* 6. For Parcels (Bağlamalar üçün) */}
+        <ParcelSection
+          onOpenTracking={() => setIsTrackingOpen(true)}
+          onOpenDownload={() => setIsDownloadOpen(true)}
+        />
 
-        {/* 7. For Drivers (Create "Gediş", no dispatch spam, passenger transfer) */}
-        <DriverSection currentLang={currentLang} />
+        {/* 7. For Drivers (Sürücülər üçün) */}
+        <DriverSection onOpenDownload={() => setIsDownloadOpen(true)} />
 
-        {/* 8. App Screens Showcase (User & Driver screens carousel) */}
-        <AppScreensCarousel currentLang={currentLang} />
+        {/* 8. App Screens Interactive Showcase (User app vs Driver app) */}
+        <AppScreensGallery />
 
-        {/* 9. Optional Innovation: Camera-based Parcel Volume Measurement */}
-        <VolumeArDemo currentLang={currentLang} />
+        {/* 9. 'Tezliklə' AR Camera Parcel Measurement */}
+        <ArMeasureTeaser />
 
-        {/* 10. Frequently Asked Questions (Accordion) */}
-        <FaqSection currentLang={currentLang} />
+        {/* 10. FAQ Accordion */}
+        <FaqSection />
 
-        {/* 11. Final High-Converting CTA & QR Code */}
-        <DownloadCta currentLang={currentLang} onOpenDownload={handleOpenDownload} />
+        {/* 11. Final CTA */}
+        <FinalCta onOpenDownload={() => setIsDownloadOpen(true)} />
       </main>
 
-      {/* 12. Quiet Respectful Footer */}
+      {/* 12. Footer */}
       <Footer
-        currentLang={currentLang}
         onOpenPrivacy={() => setLegalModalType('privacy')}
         onOpenTerms={() => setLegalModalType('terms')}
+        onOpenDownload={() => setIsDownloadOpen(true)}
       />
 
-      {/* Interactive Overlays */}
+      {/* Interactive Modals */}
       <DownloadModal
-        isOpen={downloadModalOpen}
-        onClose={handleCloseDownload}
-        currentLang={currentLang}
+        isOpen={isDownloadOpen}
+        onClose={() => setIsDownloadOpen(false)}
+      />
+
+      <TicketModal
+        isOpen={isTicketOpen}
+        onClose={() => setIsTicketOpen(false)}
+      />
+
+      <ParcelTrackingModal
+        isOpen={isTrackingOpen}
+        onClose={() => setIsTrackingOpen(false)}
       />
 
       <LegalModal
+        isOpen={legalModalType !== null}
         type={legalModalType}
         onClose={() => setLegalModalType(null)}
-        currentLang={currentLang}
       />
 
-      <CookieBanner currentLang={currentLang} />
+      {/* Cookie Banner */}
+      <CookieBanner />
     </div>
   );
 }

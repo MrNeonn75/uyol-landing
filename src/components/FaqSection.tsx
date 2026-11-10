@@ -1,64 +1,63 @@
 import React, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { Language } from '../types';
-import { translations } from '../i18n/translations';
+import { FAQ_LIST } from '../data/uyolData';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
-interface FaqSectionProps {
-  currentLang: Language;
-}
+export const FaqSection: React.FC = () => {
+  const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
 
-export const FaqSection: React.FC<FaqSectionProps> = ({ currentLang }) => {
-  const [openId, setOpenId] = useState<string | null>('faq-1');
-  const t = translations[currentLang];
-
-  const toggleItem = (id: string) => {
-    setOpenId((prev) => (prev === id ? null : id));
+  const toggleFaq = (id: string) => {
+    setOpenFaqId((prev) => (prev === id ? null : id));
   };
 
   return (
-    <section id="faq" className="py-20 bg-neutral-50/70 border-b border-neutral-200">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-10">
-        {/* Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-block text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-100/60 px-3 py-1 rounded-md">
-            Şəffaflıq
+    <section id="faq" className="py-20 md:py-28 bg-[#FCFCFC] border-b border-neutral-200">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <div className="text-xs font-semibold tracking-wider uppercase text-neutral-500 mb-2">
+            Tez-tez Verilən Suallar
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-neutral-950">
-            {t.faq.title}
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E] tracking-tight mb-4">
+            Ağlınızda sual qalmasın
           </h2>
-          <p className="text-sm sm:text-base text-neutral-600">
-            {t.faq.subtitle}
+          <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed text-balance">
+            UYOL haqqında ən çox maraqlanılan sualların cavabları ilə tanış olun.
           </p>
         </div>
 
-        {/* Accordion Container */}
-        <div className="space-y-3">
-          {t.faq.items.map((item) => {
-            const isOpen = openId === item.id;
+        {/* Accordion List */}
+        <div className="space-y-3.5">
+          {FAQ_LIST.map((faq) => {
+            const isOpen = openFaqId === faq.id;
             return (
               <div
-                key={item.id}
-                className="bg-white rounded-2xl border border-neutral-200/80 overflow-hidden transition-all shadow-2xs hover:border-blue-200"
+                key={faq.id}
+                className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                  isOpen
+                    ? 'bg-white border-[#1E1E1E] shadow-sm'
+                    : 'bg-[#F2F2F7] border-neutral-200/80 hover:border-neutral-300'
+                }`}
               >
                 <button
-                  type="button"
-                  onClick={() => toggleItem(item.id)}
-                  className="w-full px-5 py-4.5 text-left flex items-center justify-between gap-4 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-600"
+                  onClick={() => toggleFaq(faq.id)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-sm sm:text-base font-bold text-neutral-900 leading-snug">
-                    {item.question}
+                  <span className="text-sm sm:text-base font-bold text-neutral-900 tracking-tight">
+                    {faq.question}
                   </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-neutral-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-blue-600' : ''
+                  <div
+                    className={`w-7 h-7 rounded-full bg-neutral-200/70 flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 bg-[#DDF32C] text-[#1E1E1E]' : 'text-neutral-600'
                     }`}
-                  />
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
                 </button>
 
                 {isOpen && (
                   <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-neutral-600 leading-relaxed border-t border-neutral-100">
-                    {item.answer}
+                    <p>{faq.answer}</p>
                   </div>
                 )}
               </div>

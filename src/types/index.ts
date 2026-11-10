@@ -1,23 +1,27 @@
-export type Language = 'az' | 'en' | 'ru';
-
-export interface NavLink {
+export interface TripItem {
   id: string;
+  from: string;
+  to: string;
+  departureTime: string;
+  arrivalTime: string;
+  duration: string;
+  driverName: string;
+  driverAvatar: string;
+  carModel: string;
+  carPlate: string;
+  rating: number;
+  price: number;
+  availableSeats: number;
+  isDoorToDoor: boolean;
+  seats: SeatItem[];
+}
+
+export interface SeatItem {
+  id: number;
+  row: number;
+  col: number;
+  status: 'empty' | 'male' | 'female' | 'selected';
   label: string;
-  href: string;
-}
-
-export interface StepItem {
-  number: string;
-  title: string;
-  description: string;
-  badge?: string;
-}
-
-export interface FeatureCard {
-  title: string;
-  description: string;
-  tag: string;
-  details?: string[];
 }
 
 export interface FaqItem {
@@ -29,10 +33,16 @@ export interface FaqItem {
 export interface AppScreen {
   id: string;
   title: string;
-  role: 'user' | 'driver';
-  category: string;
+  tag: string;
   description: string;
-  figmaSlotName: string;
-  // If a real Figma export screenshot is placed in /public/screens or /assets, pass the path here:
-  imageSrc?: string;
+  appType: 'user' | 'driver';
+  category: string;
+}
+
+export interface ParcelCheckpoint {
+  id: string;
+  title: string;
+  time?: string;
+  status: 'completed' | 'current' | 'upcoming';
+  description: string;
 }
