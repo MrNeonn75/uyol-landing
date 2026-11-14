@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { X, Search, CheckCircle2, Clock, AlertCircle, RefreshCw, MapPin } from 'lucide-react';
-import { PARCEL_CHECKPOINTS } from '../data/uyolData';
+import { X, Search, CheckCircle2, Clock, RefreshCw } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface ParcelTrackingModalProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ interface ParcelTrackingModalProps {
 export const ParcelTrackingModal: React.FC<ParcelTrackingModalProps> = ({ isOpen, onClose }) => {
   const [trackingCode, setTrackingCode] = useState('UY-84920');
   const [isSearched, setIsSearched] = useState(true);
+  const { t } = useLanguage();
 
   if (!isOpen) return null;
 
@@ -25,28 +26,26 @@ export const ParcelTrackingModal: React.FC<ParcelTrackingModalProps> = ({ isOpen
         role="dialog"
         aria-modal="true"
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 rounded-full bg-neutral-100 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200 transition-colors"
-          aria-label="Bağla"
+          aria-label={t.trackingModal.closeAria}
         >
           <X className="w-5 h-5" />
         </button>
 
         <div className="mb-6">
           <span className="text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 bg-[#DDF32C]/30 text-neutral-800 rounded-md">
-            Canlı İzləmə
+            {t.trackingModal.badge}
           </span>
           <h3 className="text-2xl font-bold tracking-tight text-neutral-900 mt-2">
-            Bağlamanı İzlə
+            {t.trackingModal.title}
           </h3>
           <p className="text-xs text-neutral-500 mt-1">
-            Həm göndərən, həm də alıcı eyni anda real vaxt rejimində bağlamanın harada olduğunu izləyir.
+            {t.trackingModal.subtitle}
           </p>
         </div>
 
-        {/* Search input form */}
         <form onSubmit={handleSearch} className="mb-6">
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -55,7 +54,7 @@ export const ParcelTrackingModal: React.FC<ParcelTrackingModalProps> = ({ isOpen
                 type="text"
                 value={trackingCode}
                 onChange={(e) => setTrackingCode(e.target.value.toUpperCase())}
-                placeholder="İzləmə kodu (məs: UY-84920)"
+                placeholder={t.trackingModal.placeholder}
                 className="w-full pl-10 pr-3 py-2.5 bg-neutral-100 border border-neutral-200 rounded-xl text-sm text-neutral-900 placeholder-neutral-400 font-mono focus:outline-none focus:border-[#333333]"
               />
             </div>
@@ -63,62 +62,62 @@ export const ParcelTrackingModal: React.FC<ParcelTrackingModalProps> = ({ isOpen
               type="submit"
               className="px-5 py-2.5 bg-[#1E1E1E] text-white hover:bg-black font-medium text-xs rounded-xl transition-colors shrink-0"
             >
-              Yoxla
+              {t.trackingModal.checkBtn}
             </button>
           </div>
         </form>
 
         {isSearched && (
           <div className="space-y-6">
-            {/* Parcel Summary Card */}
             <div className="p-4 rounded-2xl bg-[#F2F2F7] border border-neutral-200">
               <div className="flex items-center justify-between pb-3 border-b border-neutral-200/70">
                 <div>
-                  <span className="text-[10px] text-neutral-500 font-medium block">İzləmə Kodu</span>
+                  <span className="text-[10px] text-neutral-500 font-medium block">
+                    {t.trackingModal.codeLabel}
+                  </span>
                   <span className="font-mono font-bold text-neutral-800 text-sm">{trackingCode}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[10px] text-neutral-500 font-medium block">Cari Status</span>
+                  <span className="text-[10px] text-neutral-500 font-medium block">
+                    {t.trackingModal.statusLabel}
+                  </span>
                   <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#3DB52F] bg-white px-2 py-0.5 rounded-full border border-[#3DB52F]/20">
-                    <Clock className="w-3 h-3" /> Ünvana 5 dəqiqə qaldı
+                    <Clock className="w-3 h-3" /> {t.trackingModal.statusValue}
                   </span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 pt-3 text-xs">
                 <div>
-                  <span className="text-neutral-400 block text-[10px]">Göndərən</span>
+                  <span className="text-neutral-400 block text-[10px]">{t.trackingModal.senderLabel}</span>
                   <span className="font-medium text-neutral-800">Kənan Q. (Bakı)</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-neutral-400 block text-[10px]">Qəbul edən</span>
+                  <span className="text-neutral-400 block text-[10px]">{t.trackingModal.recipientLabel}</span>
                   <span className="font-medium text-neutral-800">Aynur M. (Qəbələ)</span>
                 </div>
               </div>
             </div>
 
-            {/* Auto-reassignment guarantee banner */}
             <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200/80 flex items-start gap-2.5 text-xs text-amber-900">
               <RefreshCw className="w-4 h-4 text-amber-700 mt-0.5 shrink-0" />
               <div>
-                <span className="font-semibold block">Avtomatik Yenidən Təyinat Zəmanəti</span>
-                Sürücü ləğv edərsə, sistemimiz bağlama üçün avtomatik olaraq eyni istiqamətdəki yeni sürücünü təyin edir. Bağlama heç vaxt yolda qalmır.
+                <span className="font-semibold block">{t.trackingModal.guaranteeTitle}</span>
+                {t.trackingModal.guaranteeDesc}
               </div>
             </div>
 
-            {/* Checkpoints Timeline */}
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-500 mb-4">
-                Hərəkət Tarixçəsi və Bildirişlər
+                {t.trackingModal.timelineTitle}
               </h4>
               <div className="space-y-4 relative pl-6 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-neutral-200">
-                {PARCEL_CHECKPOINTS.map((cp) => {
+                {t.parcel.checkpoints.map((cp, idx) => {
                   const isCompleted = cp.status === 'completed';
                   const isCurrent = cp.status === 'current';
 
                   return (
-                    <div key={cp.id} className="relative">
-                      {/* Status indicator dot */}
+                    <div key={idx} className="relative">
                       <div
                         className={`absolute -left-6 top-1 w-5 h-5 rounded-full flex items-center justify-center ${
                           isCompleted
@@ -156,13 +155,12 @@ export const ParcelTrackingModal: React.FC<ParcelTrackingModalProps> = ({ isOpen
               </div>
             </div>
 
-            {/* Driver "Çatdırıldı" confirmation note */}
             <div className="p-3.5 bg-neutral-100 rounded-xl flex items-center justify-between text-xs">
               <span className="text-neutral-600">
-                Təhvil alarkən alıcıya təhlükəsizlik kodu təqdim olunur.
+                {t.trackingModal.codeNote}
               </span>
               <span className="font-semibold text-neutral-900 px-2 py-1 bg-white rounded-md border border-neutral-200">
-                Təsdiq Kodu: 492
+                {t.trackingModal.codeBadge}
               </span>
             </div>
           </div>

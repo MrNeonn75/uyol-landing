@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { FAQ_LIST } from '../data/uyolData';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const FaqSection: React.FC = () => {
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
+  const { t } = useLanguage();
 
   const toggleFaq = (id: string) => {
     setOpenFaqId((prev) => (prev === id ? null : id));
@@ -12,22 +13,20 @@ export const FaqSection: React.FC = () => {
   return (
     <section id="faq" className="py-20 md:py-28 bg-[#FCFCFC] border-b border-neutral-200">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <div className="text-xs font-semibold tracking-wider uppercase text-neutral-500 mb-2">
-            Tez-tez Verilən Suallar
+            {t.faq.kicker}
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1E1E1E] tracking-tight mb-4">
-            Ağlınızda sual qalmasın
+            {t.faq.title}
           </h2>
           <p className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed text-balance">
-            UYOL haqqında ən çox maraqlanılan sualların cavabları ilə tanış olun.
+            {t.faq.subtitle}
           </p>
         </div>
 
-        {/* Accordion List */}
         <div className="space-y-3.5">
-          {FAQ_LIST.map((faq) => {
+          {t.faq.items.map((faq) => {
             const isOpen = openFaqId === faq.id;
             return (
               <div

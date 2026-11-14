@@ -48,34 +48,36 @@ Bu layihə **UYOL** mobil tətbiqlərinin (User app və Driver app) dizayn siste
 │   │   ├── DownloadModal.tsx   # App Store / Google Play / QR yükləmə pəncərəsi
 │   │   ├── TicketModal.tsx     # Zoom olunmuş perforasiyalı bilet pəncərəsi
 │   │   ├── ParcelTrackingModal.tsx # Canlı bağlama yoxlama pəncərəsi
-│   │   ├── LegalModal.tsx      # Məxfilik siyasəti və İstifadə şərtləri
 │   │   └── CookieBanner.tsx    # Kuki xəbərdarlıq bildirişi
+│   ├── /content                # Statik hüquqi mətnlər (privacy.az.ts, privacy.en.ts, deleteAccount.ts, terms.ts)
+│   ├── /lib/renderLegalPage.ts # JS-siz ilkin HTML renderi (/privacy, /delete-account, /terms, sitemap.xml, robots.txt)
 │   ├── /data/uyolData.ts       # Reallığa uyğun nümunə reyslər, suallar və statuslar
 │   ├── /types/index.ts         # TypeScript interfeysləri
 │   ├── App.tsx                 # Əsas app strukturu
 │   ├── index.css               # Tailwind v4 və xüsusi dizayn tokenləri
 │   └── main.tsx                # React kökü
+├── /scripts/generate-static.ts # Build zamanı dist/ içində statik HTML faylları yaradır
+├── /server.ts                  # Express + Vite serveri (/privacy, /delete-account, /terms üçün HTTP 200)
+├── /vercel.json                # Vercel statik hosting qaydası (SPA fallback-sız)
+├── /netlify.toml               # Netlify 200 status qaydası
 └── package.json
 ```
 
 ---
 
-## 3. Figma-dan Əl ilə Export Edilməli Asset Siyahısı
+## 3. Statik Hüquqi Səhifələr və Hosting
 
-Əgər Figma faylından (`ssGiFe1lbc3euHLEEylGuo`) birbaşa SVG və PNG formatında rəsmi vektorları əlavə etmək istəsəniz, aşağıdakı elementləri export edə bilərsiniz:
+- `/privacy` — Tam statik, JS-siz ilkin HTML-də Məxfilik Siyasəti (AZ + EN)
+- `/delete-account` — Hesabı və məlumatları silmək təlimatı (AZ + EN)
+- `/terms` — İstifadə Şərtləri (AZ + EN)
+- `/sitemap.xml` və `/robots.txt` — Axtarış sistemləri və Google Play botları üçün açıq indeksasiya
 
-1. **Loqo Wordmark (SVG):**
-   - Node: `Splash Screen / Logo` (və ya Header loqosu).
-   - Variantlar:
-     - Üfüqi: "U" (Lime `#DDF32C`) + "YOL" (Ağ `#FFFFFF` və ya Qara `#1E1E1E`).
-     - Şaquli (Splash 90° variantı): aşağıdan yuxarı oxunan "U-YOL" wordmark.
-2. **Sürücü Mascotu (3D Render / PNG):**
-   - Node: `Driver / Log in / Choises` ekranından 3D lime formalı və "U" kepkalı sürücü personajı.
-3. **Lime Mikroavtobus (PNG):**
-   - Node: `Driver / Log in / Choises` ekranındakı lime detallı mikroavtobus / Sprinter / Vito modeli.
-4. **Tətbiq Ekranları (Mockup PNG-ləri):**
-   - User App: `User / Search Trips`, `User / Seat Selection (Gender)`, `User / My Tickets (Perforated)`, `User / Parcel Tracking`.
-   - Driver App: `Driver / Post Trip`, `Driver / Booking Notifications`, `Driver / Passenger Transfer`.
+Statik Nginx istifadə olunarsa, `/privacy` sorğusunun `index.html`-ə düşməməsi üçün:
+```nginx
+location / {
+  try_files $uri $uri.html $uri/index.html /index.html;
+}
+```
 
 ---
 
@@ -85,6 +87,12 @@ Bu layihə **UYOL** mobil tətbiqlərinin (User app və Driver app) dizayn siste
 ```bash
 npm install
 npm run dev
+```
+
+### İstehsal (Production) build və start:
+```bash
+npm run build
+npm start
 ```
 
 ### Dizayn Tokenlərinin Dəyişdirilməsi:

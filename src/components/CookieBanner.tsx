@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Check } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const CookieBanner: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const accepted = localStorage.getItem('uyol_cookies_accepted');
@@ -24,14 +26,14 @@ export const CookieBanner: React.FC = () => {
       <div className="flex items-start gap-2.5 text-xs text-neutral-300">
         <ShieldCheck className="w-4 h-4 text-[#DDF32C] shrink-0 mt-0.5" />
         <p className="leading-relaxed">
-          Tətbiq təcrübənizi yaxşılaşdırmaq və naviqasiyanı təmin etmək üçün zəruri kukilərdən istifadə edirik.
+          {t.cookie.text}
         </p>
       </div>
       <button
         onClick={handleAccept}
         className="px-4 py-2 bg-[#DDF32C] text-[#1E1E1E] font-semibold text-xs rounded-xl hover:bg-[#cbe020] transition-colors whitespace-nowrap shrink-0 self-end sm:self-auto flex items-center gap-1"
       >
-        <Check className="w-3.5 h-3.5" /> Qəbul et
+        <Check className="w-3.5 h-3.5" /> {t.cookie.accept}
       </button>
     </div>
   );
